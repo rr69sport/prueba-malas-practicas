@@ -1,0 +1,115 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+/* TOP-BAR */
+.top-bar { 
+    background-color: #333;
+}
+@media screen and (min-width: 768px) {
+    .top-bar {
+        display: none;
+    }
+}
+
+/* ICON-MENU */
+.icon-menu {
+    display: flex;
+    align-items: center;
+
+    width: 40px;
+    height: 40px;
+    padding-left: 1em;
+
+    cursor: pointer;
+}
+.icon-menu__bar {
+    /* Esta variable al relacionarla con la altura del before y el after,
+    hace que si la altura de la barra de la hamburgueza cambie,
+    la distancia entre ellas también lo haga.*/
+    --height: 4px;
+    position: relative;
+}
+.icon-menu__bar::before {
+    top: calc(var(--height) * -2); 
+}
+.icon-menu__bar::after {
+    top: calc(var(--height) * 2); 
+}
+.icon-menu__bar::after,
+.icon-menu__bar::before {
+    content: '';
+
+    display: block;
+
+    position: absolute;
+}
+.icon-menu__bar,
+.icon-menu__bar::after,
+.icon-menu__bar::before {
+    width: 100%;
+    height: var(--height);
+
+    background-color: #fff;
+
+    border-radius: 2px;
+}
+
+/* MENU */
+.menu {
+    position: relative;
+    left: 0;
+
+    transform: translateX(-100%);
+
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+
+    background: #333;
+
+    list-style: none;
+    
+    transition: transform 0.3s;
+}
+.menu__item {
+    padding: 1em;
+    border-bottom: 1px solid #fff;
+}
+.menu__link {
+    color: #fff;
+    text-decoration: none;
+}
+.show {
+    transform: translateX(0);
+}
+
+@media screen and (min-width: 768px) {
+    .menu__item {
+        border-bottom: none;
+        text-transform: uppercase;
+    }
+    .menu__item:hover {
+        background-color: grey;
+    }
+    .menu__item:hover a {
+        color: #000;
+    }
+}
+@media screen and (min-width: 768px) {
+    .menu {
+      display: flex;
+      justify-content: space-evenly;
+      transform: translateX(0);
+    }
+}
+
+.menu__link {
+    color: red;
+}

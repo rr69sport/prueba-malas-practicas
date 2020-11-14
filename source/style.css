@@ -1,0 +1,149 @@
+/*
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+Esto es necesario para que los elementos no sumen 
+propiedades como: margin, padding o border al width de la caja
+*/
+
+body {
+  margin: 0;
+}
+
+/*
+1: Es mejor NO usar estilos descendientes,
+ni clases o IDs ligados a elementos html específicos.
+Generan una especificidad muy alta y 
+para temas de escalabilidad se tornan inmantenibles
+*/
+
+/*
+2: NO se debe aplicar estilos a IDs
+tienen una especificidad más alta que las clases
+y además si el elemento debe repetirse a lo largo de la página
+se deben repetir estilos ya que un ID debe ser único
+*/
+
+/*
+4: Al usar solo la propiedad "background"
+se sobreescriben el resto de propiedades del shorthand
+*/
+
+div.top-bar {
+  background: #333; /* 3  */
+}
+
+@media screen and (min-width: 768px) {
+  div.top-bar {
+    display: none;
+  }
+}
+
+/* 
+4: NO es necesario, invalida a padding-left.
+justify-content, tiene prioridad sobre padding-left 
+y reubica el elemento anulando esta última.
+A nivel visual por alineación de elementos, lo correcto es padding-left
+*/
+
+#icon-menu /* 1 */ {
+  display: flex;
+  justify-content: center; /* 4 */
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding-left: 1em; /* 4 */
+  cursor: pointer;
+}
+
+/* 1 y 2 */
+div#icon-menu .icon-bar {
+  position: relative;
+  width: 30px; /* repetido */
+  height: 4px; /* repetido */
+  background: #fff; /* 3  */
+  border-radius: 2px;
+}
+
+/* 1 y 2 */
+div#icon-menu .icon-bar:after,
+div#icon-menu .icon-bar:before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 30px; /* repetido */
+  height: 4px; /* repetido */
+  border-radius: 2px;
+  background: #fff; /* 3  */
+  top: -0.5em;
+}
+
+/* 1 y 2 */
+div#icon-menu .icon-bar:after {
+  top: 0.5em;
+}
+
+/* 1 */
+ul.menu {
+  background: #333; /* 3  */
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0; /* la etiqueta UL por defecto No tiene margin-left */
+  list-style: none;
+  position: relative;
+  left: -100%;
+  transition: all 0.3s; /* Por rendimiento es mejor especificar a qué propiedad se le quiere aplicar la transición, en este caso a left, que tampoco es recomendable por lo mismo, lo ideal es delegar esa tarea a transform que está optimizado para animaciones */
+}
+
+/* 1 */
+ul li .link {
+  color: #fff;
+  text-decoration: none;
+}
+
+@media screen and (min-width: 768px) {
+  /* 1 */
+  nav ul.menu {
+    display: flex;
+    justify-content: space-evenly;
+    left: 0;
+  }
+}
+
+/* 1 */
+ul.show {
+  left: 0;
+}
+
+/* 1 */
+ul li {
+  padding: 1em;
+  border-bottom: 1px solid #fff;
+}
+
+@media screen and (min-width: 768px) {
+  /* 1 */
+  ul li {
+    border-bottom: none;
+    text-transform: uppercase;
+  }
+  /* 1 */
+  ul li:hover {
+    background: grey;
+  }
+  /* 1 */
+  ul li:hover a {
+    color: #000;
+  }
+}
+
+/*  POR QUÉ NO SE APLICA ESTA CLASE */
+/* Porque en la línea 102 la especificidad del selector al ser descendiente es más alta (0,1,2) */
+/* aquí la especificidad es de (0,1,0) */
+/* La especificidad más alta gana, salvo que se use !important en la línea 148 */
+.link {
+  color: red;
+}
